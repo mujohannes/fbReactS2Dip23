@@ -12,6 +12,7 @@ export function Signin( props ) {
   const [validemail, setValidemail] = useState(false)
   const [password,setPassword] = useState('')
   const [validpassword, setValidpassword ] = useState(false)
+  const [error, setError] = useState()
   const navigate = useNavigate()
 
   useEffect( () => {
@@ -41,6 +42,18 @@ export function Signin( props ) {
   const submitHandler = (evt) => {
     evt.preventDefault()
     props.handler( email, password )
+    .then( (response) => console.log(response) )
+    .catch( (err) => {
+      console.log(err.code)
+      switch( err.code ) {
+        case "auth/invalid-login-credentials":
+          setError( "the account does not exist")
+        case "auth/invalid-password":
+          setError("password is incorrect")
+        default: return
+      }
+      
+    } )
   }
 
   return(
@@ -49,8 +62,9 @@ export function Signin( props ) {
         <Col md={ {span: 4, offset: 4} }>
           <Form onSubmit={ submitHandler }>
             <Form.Group>
-              <Form.Label>Email</Form.Label>
+              <Form.Label htmlFor="email">Email</Form.Label>
               <Form.Control 
+                id="email"
                 type="email" 
                 name="email" 
                 placeholder="you@example.com" 
@@ -59,8 +73,9 @@ export function Signin( props ) {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Password</Form.Label>
+              <Form.Label htmlFor="password">Password</Form.Label>
               <Form.Control 
+                id="password"
                 type="password" 
                 name="password" 
                 placeholder="your password" 
@@ -76,6 +91,7 @@ export function Signin( props ) {
             >
               Sign in
             </Button>
+            <Form.Text>{error}</Form.Text>
           </Form>
         </Col>
       </Row>
