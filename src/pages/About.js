@@ -1,8 +1,38 @@
+import Container from "react-bootstrap/Container"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import Button from "react-bootstrap/Button"
+//import data from  "../data/bookSampleData.json"
+
+import { useState } from "react"
+
 export function About ( props ) {
+  const [stuff,setStuff] = useState([])
+
+  const clickHandler = () => {
+    fetch("/data/bookSampleData.json")
+      .then( (res) => res.json() )
+      .then( (data) => {
+        props.add(data)
+      } )
+  }
+
+  const Things = stuff.map((item, key) => {
+    return(
+      <p key={key}>Yo {item.book_title} {key}</p>
+    )
+  })
+
   return ( 
-  <div>
-    <h1>{ props.greeting }</h1>
-    <button onClick={ () => props.handler("I've been clicked!") } >Click me</button>
-  </div>
+    <Container>
+      <Row>
+        <Col>
+          <Button variant="info" onClick={clickHandler}>Batch</Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>{Things}</Col>
+      </Row>
+    </Container>
   )
 }

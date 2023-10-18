@@ -15,12 +15,15 @@ export function Home ( props ) {
   // collection
   const Items = books.map( (item, key) => {
     return (
-      <Col md="4" key={key}>
-        <Card>
+      <Col md="4" key={key} className="my-2 d-flex flex-column">
+        <Card className="d-flex flex-column flex-1 flex-fill">
           <Card.Body>
-            <Card.Title>{item.title}</Card.Title>
+            <Card.Title>{item.book_title}</Card.Title>
             <Card.Text>
               By {item.author}
+            </Card.Text>
+            <Card.Text>
+              {item.id}
             </Card.Text>
           </Card.Body>
         </Card>

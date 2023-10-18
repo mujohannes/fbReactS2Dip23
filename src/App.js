@@ -12,7 +12,10 @@ import {
   collection, 
   query, 
   where, 
-  getDocs 
+  getDocs,
+  writeBatch,
+  doc,
+  addDoc 
 } from "firebase/firestore"
 import { Routes, Route } from "react-router-dom"
 import { useState, useEffect } from "react"
@@ -121,13 +124,26 @@ function App() {
     setData( listdata )
   }
 
+  const dataBatch = async ( data ) => {
+    const batch = writeBatch(FBdb)
+    // data.forEach( (item) => {
+    //   const ref = doc(collection( FBdb, "books"))
+    //   batch.set( ref, item )
+    // })
+    for( let i=0; i < data.length; i++ ) {
+      const ref = doc(collection( FBdb, "books"))
+      batch.set( ref, data[i] )
+    }
+    batch.commit().then((res) => console.log(res))
+  }
+
   return (
     <div className="App">
       <Header items={nav} user={auth} />
       <AuthContext.Provider value={auth}>
         <Routes>
           <Route path="/" element={<Home items = {data} />} />
-          <Route path="/about" element={<About greeting="Hey you, this is about page!" handler={saySomething} />} />
+          <Route path="/about" element={<About add={dataBatch} />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signup" element={<Signup handler={signUp} />} />
           <Route path="/signout" element={<Signout handler={logOut} />} />
