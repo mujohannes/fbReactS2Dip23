@@ -34,6 +34,6 @@ export function ProductImage(props) {
     )
   }
   else {
-    return <img src={image} className="img-fluid card-img" style={{ aspectRatio: "4/5", objectFit: "cover", objectPosition: "center"}} />
+    return <img src={image} className="img-fluid card-img" style={{ aspectRatio: "4/5", objectFit: "cover", objectPosition: "top"}} />
   }
 }
