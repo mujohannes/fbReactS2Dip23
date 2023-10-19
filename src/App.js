@@ -17,6 +17,7 @@ import {
   doc,
   addDoc 
 } from "firebase/firestore"
+import { getStorage, ref, getDownloadURL } from "firebase/storage"
 import { Routes, Route } from "react-router-dom"
 import { useState, useEffect } from "react"
 
@@ -37,6 +38,7 @@ function App() {
   const FBapp = initializeApp(FirebaseConfig)
   const FBauth = getAuth(FBapp)
   const FBdb = getFirestore(FBapp)
+  const FBstor = getStorage(FBapp)
 
   // navigation array
   const NavItems = [
@@ -137,12 +139,21 @@ function App() {
     batch.commit().then((res) => console.log(res))
   }
 
+  const getImageUrl = async ( imgName ) => {
+    const path = `book_covers/${imgName}`
+    const imgRef = ref( FBstor, path )
+    const url = await getDownloadURL(imgRef)
+    return url
+  }
+
   return (
     <div className="App">
       <Header items={nav} user={auth} />
       <AuthContext.Provider value={auth}>
         <Routes>
-          <Route path="/" element={<Home items = {data} />} />
+          <Route path="/" element={
+            <Home items = {data} image={getImageUrl} />
+          } />
           <Route path="/about" element={<About add={dataBatch} />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signup" element={<Signup handler={signUp} />} />

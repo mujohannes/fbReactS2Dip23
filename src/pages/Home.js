@@ -12,6 +12,10 @@ export function Home ( props ) {
     setBooks( props.items )
   }, [props.items])
 
+  const ItemImage = ( props ) => {
+
+  }
+
   // collection
   const Items = books.map( (item, key) => {
     return (
