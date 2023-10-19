@@ -19,17 +19,15 @@ export function Home ( props ) {
   const Items = books.map( (item, key) => {
     return (
       <Col md="4" key={key} className="my-2 d-flex flex-column">
-        <Card className="d-flex flex-column flex-1 flex-fill">
+        <Card className="d-flex flex-column flex-1 flex-fill position-relative">
           <ProductImage src={ item.cover_image} />
           <Card.Body>
             <Card.Title>{item.book_title}</Card.Title>
             <Card.Text>
               By {item.author}
             </Card.Text>
-            <Card.Text>
-              {item.id}
-            </Card.Text>
           </Card.Body>
+          <Card.Link href={"/item/" + item.id } className="position-absolute" style={{top:0,bottom: 0, left: 0, right: 0}}></Card.Link>
         </Card>
       </Col>
     )

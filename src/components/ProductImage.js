@@ -22,11 +22,7 @@ export function ProductImage(props) {
     if (!image) {
       getImageUrl(props.src)
         .then((url) => {
-          fetch(url)
-            .then((res) => res.blob())
-            .then((imgCode) => {
-              setImage(URL.createObjectURL(imgCode))
-            })
+          setImage(url)
         })
         .catch((err) => console.log(err))
     }
@@ -38,6 +34,6 @@ export function ProductImage(props) {
     )
   }
   else {
-    return <img src={image} />
+    return <img src={image} className="img-fluid card-img" style={{ aspectRatio: "4/5", objectFit: "cover", objectPosition: "center"}} />
   }
 }
