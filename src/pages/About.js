@@ -13,7 +13,8 @@ export function About ( props ) {
     fetch("/data/bookSampleData.json")
       .then( (res) => res.json() )
       .then( (data) => {
-        props.add(data)
+        // disable when data has been added
+        // props.add(data)
       } )
   }
 
@@ -26,9 +27,9 @@ export function About ( props ) {
   return ( 
     <Container>
       <Row>
-        <Col>
+        {/* <Col>
           <Button variant="info" onClick={clickHandler}>Batch</Button>
-        </Col>
+        </Col> */}
       </Row>
       <Row>
         <Col>{Things}</Col>

@@ -7,15 +7,15 @@ import {
   signOut,
   signInWithEmailAndPassword
 } from "firebase/auth"
-import { 
-  getFirestore, 
-  collection, 
-  query, 
-  where, 
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
   getDocs,
   writeBatch,
   doc,
-  addDoc 
+  addDoc
 } from "firebase/firestore"
 import { getStorage, ref, getDownloadURL } from "firebase/storage"
 import { Routes, Route } from "react-router-dom"
@@ -32,7 +32,7 @@ import { Signin } from "./pages/Signin"
 
 //contexts
 import { AuthContext } from "./contexts/AuthContext"
-
+import { StorageContext } from "./contexts/StorageContext"
 
 function App() {
   const FBapp = initializeApp(FirebaseConfig)
@@ -60,12 +60,12 @@ function App() {
   const [nav, setNav] = useState(NavItems)
   const [auth, setAuth] = useState(false)
   const [data, setData] = useState([])
-  const [ fetching , setFetching ] = useState( false )
+  const [fetching, setFetching] = useState(false)
 
-  useEffect( () => {
-    if( data.length === 0 && fetching === false ) {
+  useEffect(() => {
+    if (data.length === 0 && fetching === false) {
       readData()
-      setFetching( true )
+      setFetching(true)
     }
   }, [data])
 
@@ -82,9 +82,7 @@ function App() {
       setNav(NavItems)
     }
   })
-  const saySomething = (word) => {
-    alert(word)
-  }
+
   // signing up a user
   const signUp = (email, password) => {
     createUserWithEmailAndPassword(FBauth, email, password)
@@ -93,13 +91,13 @@ function App() {
       })
       .catch((error) => console.log(error.message))
   }
-
+  // logging a user out
   const logOut = () => {
     signOut(FBauth).then(() => {
       // user is signed out
     })
   }
-
+  // signing in a user
   const signIn = (email, password) => {
     return new Promise((resolve, reject) => {
       signInWithEmailAndPassword(FBauth, email, password)
@@ -107,41 +105,38 @@ function App() {
           // user is signed in
           resolve(true)
         })
-        .catch((error) => { 
-          console.log(error) 
-          reject( error.code )
+        .catch((error) => {
+          // there's an error with the process
+          reject(error.code)
         })
     })
   }
 
   // function to get data
   const readData = async () => {
-    const querySnapshot = await getDocs( collection( FBdb, "books") )
+    const querySnapshot = await getDocs(collection(FBdb, "books"))
     let listdata = []
-    querySnapshot.forEach( (doc) => {
+    querySnapshot.forEach((doc) => {
       let item = doc.data()
       item.id = doc.id
-      listdata.push( item )
+      listdata.push(item)
     })
-    setData( listdata )
+    setData(listdata)
   }
 
-  const dataBatch = async ( data ) => {
+  const dataBatch = async (data) => {
     const batch = writeBatch(FBdb)
-    // data.forEach( (item) => {
-    //   const ref = doc(collection( FBdb, "books"))
-    //   batch.set( ref, item )
-    // })
-    for( let i=0; i < data.length; i++ ) {
-      const ref = doc(collection( FBdb, "books"))
-      batch.set( ref, data[i] )
+
+    for (let i = 0; i < data.length; i++) {
+      const ref = doc(collection(FBdb, "books"))
+      batch.set(ref, data[i])
     }
     batch.commit().then((res) => console.log(res))
   }
 
-  const getImageUrl = async ( imgName ) => {
+  const getImageUrl = async (imgName) => {
     const path = `book_covers/${imgName}`
-    const imgRef = ref( FBstor, path )
+    const imgRef = ref(FBstor, path)
     const url = await getDownloadURL(imgRef)
     return url
   }
@@ -150,16 +145,18 @@ function App() {
     <div className="App">
       <Header items={nav} user={auth} />
       <AuthContext.Provider value={auth}>
-        <Routes>
-          <Route path="/" element={
-            <Home items = {data} image={getImageUrl} />
-          } />
-          <Route path="/about" element={<About add={dataBatch} />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/signup" element={<Signup handler={signUp} />} />
-          <Route path="/signout" element={<Signout handler={logOut} />} />
-          <Route path="/signin" element={<Signin handler={signIn} authstate={auth} />} />
-        </Routes>
+        <StorageContext.Provider value={FBstor}>
+          <Routes>
+            <Route path="/" element={
+              <Home items={data} image={getImageUrl} />
+            } />
+            <Route path="/about" element={<About add={dataBatch} />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/signup" element={<Signup handler={signUp} />} />
+            <Route path="/signout" element={<Signout handler={logOut} />} />
+            <Route path="/signin" element={<Signin handler={signIn} authstate={auth} />} />
+          </Routes>
+        </StorageContext.Provider>
       </AuthContext.Provider>
     </div>
   );
