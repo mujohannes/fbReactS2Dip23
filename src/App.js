@@ -134,13 +134,6 @@ function App() {
     batch.commit().then((res) => console.log(res))
   }
 
-  const getImageUrl = async (imgName) => {
-    const path = `book_covers/${imgName}`
-    const imgRef = ref(FBstor, path)
-    const url = await getDownloadURL(imgRef)
-    return url
-  }
-
   return (
     <div className="App">
       <Header items={nav} user={auth} />
@@ -148,7 +141,7 @@ function App() {
         <StorageContext.Provider value={FBstor}>
           <Routes>
             <Route path="/" element={
-              <Home items={data} image={getImageUrl} />
+              <Home items={data}  />
             } />
             <Route path="/about" element={<About add={dataBatch} />} />
             <Route path="/contact" element={<Contact />} />
