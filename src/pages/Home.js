@@ -29,7 +29,12 @@ export function Home(props) {
           <Card.Body>
             <Card.Title>{ book.book_title }</Card.Title>
           </Card.Body>
-          <Card.Link href={"/item/" + item.id } className="position-absolute" style={{top:0,bottom: 0, left: 0, right: 0}}></Card.Link>
+          <Card.Link 
+            href={itemLink} 
+            className="position-absolute" 
+            style={{top:0,bottom: 0, left: 0, right: 0}}
+          >
+          </Card.Link>
         </Card>
       </Col>
     )

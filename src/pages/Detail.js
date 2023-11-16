@@ -23,7 +23,7 @@ export function Detail(props) {
       <Container>
         <Row>
           <Col>
-            <h1>{bookData.book_title}</h1>
+            <h1 className="my-4">{bookData.book_title}</h1>
           </Col>
         </Row>
         <Row>
