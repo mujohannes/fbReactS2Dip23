@@ -3,30 +3,31 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Card from "react-bootstrap/Card"
 
-import { ProductImage } from "../components/ProductImage"
+import { useState, useEffect, useContext } from 'react'
+import { ItemImage } from "../components/ItemImage"
 
-import { useState, useEffect} from 'react'
-
-export function Home ( props ) {
-  const [ books, setBooks ] = useState([])
-
-  useEffect( () => {
+export function Home(props) {
+  const [books,setBooks] = useState([])
+  
+  useEffect(() => {
+    console.log( props.items )
     setBooks( props.items )
     console.log("setting")
   }, [props.items])
 
 
-  // collection
-  const Items = books.map( (item, key) => {
-    return (
-      <Col md="4" key={key} className="my-2 d-flex flex-column">
-        <Card className="d-flex flex-column flex-1 flex-fill position-relative">
-          <ProductImage src={ item.cover_image} />
+
+  const ItemCards = books.map( ( book, itemkey ) => {
+    const title = book.book_title.replace(/\s/g, "-")
+    const itemLink = `detail/${book.id}/${title}`
+    return(
+      <Col md={4} className="mb-4" key={itemkey}>
+        <Card key={itemkey} className="position-relative">
+          <a href={itemLink} className="position-absolute" style={{top:0, left:0, right:0,bottom:0}}>
+          </a>
+          <ItemImage source={ book.cover_image} />
           <Card.Body>
-            <Card.Title>{item.book_title}</Card.Title>
-            <Card.Text>
-              By {item.author}
-            </Card.Text>
+            <Card.Title>{ book.book_title }</Card.Title>
           </Card.Body>
           <Card.Link href={"/item/" + item.id } className="position-absolute" style={{top:0,bottom: 0, left: 0, right: 0}}></Card.Link>
         </Card>
@@ -37,7 +38,7 @@ export function Home ( props ) {
   return (
     <Container>
       <Row>
-        {Items}
+        {ItemCards}
       </Row>
     </Container>
   )
