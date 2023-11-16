@@ -12,6 +12,7 @@ export function Home ( props ) {
 
   useEffect( () => {
     setBooks( props.items )
+    console.log("setting")
   }, [props.items])
 
 
