@@ -27,10 +27,10 @@ export function Detail(props) {
           </Col>
         </Row>
         <Row>
-          <Col md={6}>
+          <Col md={4}>
             <ItemImage source={bookData.cover_image} />
           </Col>
-          <Col md={6}>
+          <Col md={8}>
             <h2>More information</h2>
             <h3>Summary</h3>
             <p>{bookData.summary}</p>
@@ -40,7 +40,7 @@ export function Detail(props) {
             <p>ISBN10 {bookData.isbn10}</p>
             <p>ISBN13 {bookData.isbn13}</p>
             <Form>
-              <h3>Rewiew this book</h3>
+              <h3>Review this book</h3>
               <Form.Group>
                 <Form.Label>Star</Form.Label>
                 <Form.Select>

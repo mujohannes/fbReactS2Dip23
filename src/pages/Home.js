@@ -17,7 +17,8 @@ export function Home(props) {
 
 
   const ItemCards = books.map( ( book, itemkey ) => {
-    const itemLink = `detail/${book.id}`
+    const title = book.book_title.replace(/\s/g, "-")
+    const itemLink = `detail/${book.id}/${title}`
     return(
       <Col md={4} className="mb-4" key={itemkey}>
         <Card key={itemkey} className="position-relative">

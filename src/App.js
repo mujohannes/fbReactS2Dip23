@@ -146,7 +146,7 @@ function App() {
             <Route path="/signup" element={<Signup handler={signUp} />} />
             <Route path="/signout" element={<Signout handler={logOut} />} />
             <Route path="/signin" element={<Signin handler={signIn} authstate={auth} />} />
-            <Route path="/detail/:id" element={<Detail handler={getDocument} />} />
+            <Route path="/detail/:id/:title" element={<Detail handler={getDocument} />} />
           </Routes>
         </StorageContext.Provider>
       </AuthContext.Provider>
