@@ -10,14 +10,11 @@ import {
 import {
   getFirestore,
   collection,
-  query,
-  where,
   getDocs,
-  writeBatch,
   doc,
-  addDoc
+  getDoc
 } from "firebase/firestore"
-import { getStorage, ref, getDownloadURL } from "firebase/storage"
+import { getStorage } from "firebase/storage"
 import { Routes, Route } from "react-router-dom"
 import { useState, useEffect } from "react"
 
@@ -29,16 +26,18 @@ import { Contact } from "./pages/Contact"
 import { Signup } from "./pages/Signup"
 import { Signout } from "./pages/Signout"
 import { Signin } from "./pages/Signin"
+import { Detail } from "./pages/Detail"
 
 //contexts
 import { AuthContext } from "./contexts/AuthContext"
 import { StorageContext } from "./contexts/StorageContext"
 
+
 function App() {
   const FBapp = initializeApp(FirebaseConfig)
   const FBauth = getAuth(FBapp)
   const FBdb = getFirestore(FBapp)
-  const FBstor = getStorage(FBapp)
+  const FBstorage = getStorage(FBapp)
 
   // navigation array
   const NavItems = [
@@ -106,7 +105,7 @@ function App() {
           resolve(true)
         })
         .catch((error) => {
-          // there's an error with the process
+          console.log(error)
           reject(error.code)
         })
     })
@@ -138,16 +137,15 @@ function App() {
     <div className="App">
       <Header items={nav} user={auth} />
       <AuthContext.Provider value={auth}>
-        <StorageContext.Provider value={FBstor}>
+        <StorageContext.Provider value={FBstorage}>
           <Routes>
-            <Route path="/" element={
-              <Home items={data}  />
-            } />
-            <Route path="/about" element={<About add={dataBatch} />} />
+            <Route path="/" element={<Home items={data} />} />
+            <Route path="/about" element={<About greeting="Hey you, this is about page!"  />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/signup" element={<Signup handler={signUp} />} />
             <Route path="/signout" element={<Signout handler={logOut} />} />
             <Route path="/signin" element={<Signin handler={signIn} authstate={auth} />} />
+            <Route path="/detail/:id/:title" element={<Detail handler={getDocument} />} />
           </Routes>
         </StorageContext.Provider>
       </AuthContext.Provider>

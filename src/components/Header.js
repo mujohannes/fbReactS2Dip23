@@ -26,7 +26,7 @@ export function Header(props) {
   }
 
   return (
-    <Navbar>
+    <Navbar className="mb-3">
       <Container>
         <Navbar.Brand>App</Navbar.Brand>
         <Nav>

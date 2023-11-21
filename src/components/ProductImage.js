@@ -23,6 +23,7 @@ export function ProductImage(props) {
       getImageUrl(props.src)
         .then((url) => {
           setImage(url)
+          console.log( url )
         })
         .catch((err) => console.log(err))
     }
