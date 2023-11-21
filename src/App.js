@@ -12,6 +12,7 @@ import {
   collection,
   getDocs,
   doc,
+  writeBatch,
   getDoc
 } from "firebase/firestore"
 import { getStorage } from "firebase/storage"
@@ -121,6 +122,15 @@ function App() {
       listdata.push(item)
     })
     setData(listdata)
+  }
+
+  // function to get a single item
+  const getDocument = async ( itemId ) => {
+    const docRef = doc( FBdb, "books", itemId )
+    const docSnap = await getDoc( docRef )
+    let book = docSnap.data()
+    book.id = itemId
+    return book
   }
 
   const dataBatch = async (data) => {
