@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
-//import data from  "../data/bookSampleData.json"
+//import data from  "/data/bookSampleData.json"
 
 import { useState } from "react"
 
@@ -14,7 +14,7 @@ export function About ( props ) {
       .then( (res) => res.json() )
       .then( (data) => {
         // disable when data has been added
-        // props.add(data)
+        props.add(data)
       } )
   }
 
@@ -27,9 +27,9 @@ export function About ( props ) {
   return ( 
     <Container>
       <Row>
-        {/* <Col>
+        <Col>
           <Button variant="info" onClick={clickHandler}>Batch</Button>
-        </Col> */}
+        </Col>
       </Row>
       <Row>
         <Col>{Things}</Col>

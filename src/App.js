@@ -126,7 +126,7 @@ function App() {
 
   const dataBatch = async (data) => {
     const batch = writeBatch(FBdb)
-
+    // loop through data
     for (let i = 0; i < data.length; i++) {
       const ref = doc(collection(FBdb, "books"))
       batch.set(ref, data[i])
