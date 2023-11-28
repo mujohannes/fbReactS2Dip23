@@ -2,10 +2,15 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 
 import { AuthContext } from "../contexts/AuthContext"
+import { FSContext } from "../contexts/FSContext"
 import { useContext, useState } from "react"
+
+import { collection, addDoc } from "firebase/firestore"
 
 export function ReviewForm(props) {
   const auth = useContext(AuthContext)
+  const db = useContext(FSContext)
+
   const[ star, setStar ] = useState(5)
   const[title, setTitle] = useState()
   const[review, setReview] = useState()

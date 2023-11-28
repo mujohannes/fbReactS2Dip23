@@ -42,7 +42,7 @@ export function Detail(props) {
         </Row>
         <Row>
           <Col>
-            <ReviewForm booktitle={bookData.book_title} />
+            <ReviewForm booktitle={bookData.book_title} bookId={bookData.id} />
           </Col>
         </Row>
       </Container>
