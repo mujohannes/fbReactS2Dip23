@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { ItemImage } from "../components/ItemImage"
 import { ReviewForm } from "../components/ReviewForm"
+import { Reviews } from "../components/Reviews"
 
 export function Detail(props) {
   const [bookData, setBookData ] = useState()
@@ -43,6 +44,11 @@ export function Detail(props) {
         <Row>
           <Col>
             <ReviewForm booktitle={bookData.book_title} bookId={bookData.id} />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Reviews bookId={bookData.id}  />
           </Col>
         </Row>
       </Container>
