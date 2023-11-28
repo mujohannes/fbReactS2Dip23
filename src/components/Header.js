@@ -12,12 +12,14 @@ export function Header(props) {
     )
   })
   // component for Account
-  const Account = ( props ) => {
+  const Account = (props) => {
     if (props.user) {
       return (
-        <NavDropdown title={ props.user.email }>
-          <NavDropdown.Item href="/signout">Log out</NavDropdown.Item>
-        </NavDropdown>
+
+        <div className="d-flex">
+          <Navbar.Text>{ props.user.email }</Navbar.Text>
+          <Nav.Link href="/signout">Log out</Nav.Link>
+        </div>
       )
     }
     else {
@@ -31,10 +33,6 @@ export function Header(props) {
         <Navbar.Brand>App</Navbar.Brand>
         <Nav>
           {Links}
-          <Account user={ props.user } />
-          {/* <NavDropdown title={props.user.email}>
-            <NavDropdown.Item href="/signout">Log out</NavDropdown.Item>
-          </NavDropdown> */}
         </Nav>
       </Container>
     </Navbar>
