@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button"
 
 import { AuthContext } from "../contexts/AuthContext"
 import { FSContext } from "../contexts/FSContext"
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 
 import { collection, addDoc } from "firebase/firestore"
 
@@ -12,11 +12,25 @@ export function ReviewForm(props) {
   const db = useContext(FSContext)
 
   const[ star, setStar ] = useState(5)
-  const[title, setTitle] = useState()
-  const[review, setReview] = useState()
+  const[title, setTitle] = useState('')
+  const[review, setReview] = useState('')
+  const[valid, setValid] = useState(false)
 
-  const submitHandler = (event) => {
+  useEffect( () => {
+    if( title.length > 4 && review.length > 4 ) {
+      setValid( true )
+    }
+    else {
+      setValid( false )
+    }
+  }, [star, title, review])
+
+  const submitHandler = async (event) => {
     event.preventDefault()
+    const userReview = {title: title, star: star, body: review }
+    const col = collection( db, `books/${props.bookId}/reviews`)
+    const ref = await addDoc( col, userReview )
+    console.log( ref )
   }
 
   if( auth ) {
@@ -58,7 +72,14 @@ export function ReviewForm(props) {
             onChange={ (evt) => setReview(evt.target.value) }
           />
         </Form.Group>
-        <Button type="submit" variant="primary" className="mt-2">Submit</Button>
+        <Button 
+          type="submit" 
+          variant="primary" 
+          className="mt-2"
+          disabled={ (valid) ? false: true }
+        >
+          Submit
+        </Button>
       </Form>
     )    
   }
