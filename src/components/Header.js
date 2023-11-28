@@ -11,19 +11,7 @@ export function Header(props) {
       <Nav.Link href={item.link} key={itemkey}> {item.label} </Nav.Link>
     )
   })
-  // component for Account
-  const Account = ( props ) => {
-    if (props.user) {
-      return (
-        <NavDropdown title={ props.user.email }>
-          <NavDropdown.Item href="/signout">Log out</NavDropdown.Item>
-        </NavDropdown>
-      )
-    }
-    else {
-      return null
-    }
-  }
+  
 
   return (
     <Navbar>
@@ -31,10 +19,7 @@ export function Header(props) {
         <Navbar.Brand>App</Navbar.Brand>
         <Nav>
           {Links}
-          <Account user={ props.user } />
-          {/* <NavDropdown title={props.user.email}>
-            <NavDropdown.Item href="/signout">Log out</NavDropdown.Item>
-          </NavDropdown> */}
+          
         </Nav>
       </Container>
     </Navbar>

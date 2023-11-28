@@ -16,11 +16,15 @@ export function ReviewForm(props) {
 
   if( auth ) {
     return (
-      <Form onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler} className="my-4">
         <h3>Review {props.booktitle}</h3>
         <Form.Group>
           <Form.Label>Star</Form.Label>
-          <Form.Select name="star" value={star} onChange={(evt) => setStar(evt.target.value) }>
+          <Form.Select 
+            name="star" 
+            value={star} 
+            onChange={(evt) => setStar(evt.target.value) }
+          >
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -31,13 +35,25 @@ export function ReviewForm(props) {
         </Form.Group>
         <Form.Group>
           <Form.Label>Title</Form.Label>
-          <Form.Control type="text" placeholder="I love this book" />
+          <Form.Control 
+            type="text" 
+            placeholder="I love this book" 
+            name="title" 
+            onChange={ (evt) => setTitle(evt.target.value) }
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>Review</Form.Label>
-          <Form.Control as="textarea" rows={4} cols={30} placeholder="I could not put this down!" />
+          <Form.Control 
+            as="textarea" 
+            rows={4} 
+            cols={30} 
+            placeholder="I could not put this down!" 
+            name="content" 
+            onChange={ (evt) => setReview(evt.target.value) }
+          />
         </Form.Group>
-        <Button type="submit" variant="primary">Submit</Button>
+        <Button type="submit" variant="primary" className="mt-2">Submit</Button>
       </Form>
     )    
   }
